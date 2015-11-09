@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Autonapul - Caruso reservation modifications
 // @namespace   https://zemtu.com/
-// @updateURL   http://autonapul.org/misc/autonapul-caruso.meta.js
-// @downloadURL http://autonapul.org/misc/autonapul-caruso.user.js
+// @updateURL   https://github.com/autonapul/caruso/raw/master/googlemap/autonapul-caruso.meta.js
+// @downloadURL https://github.com/autonapul/caruso/raw/master/googlemap/autonapul-caruso.user.js
 // @description Autonapul - Caruso reservation modifications
 // @include     https://zemtu.com/reservation/*
 // @include     https://autonapul.zemtu.com/reservation/*
