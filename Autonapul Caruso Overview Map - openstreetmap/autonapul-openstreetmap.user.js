@@ -1,18 +1,17 @@
 // ==UserScript==
 // @name         Autonapul overview map
 // @namespace    https://github.com/autonapul/caruso
-// @version      20150607.1
+// @version      20151109.1
 // @description  Displays overview of all cars. Parts copied from http://harrywood.co.uk/maps/examples/openlayers/marker-popups.view.html
 // @author       Zenon Kuder
-// @match        https://autonapul.carusocarsharing.com/admin/main/reservationgui/canvas/
-// @match        https://carusocarsharing.com/admin/main/reservationgui/canvas/
+// @include      https://autonapul.zemtu.com/reservation/
 // @grant        none
 // @require http://www.openlayers.org/api/OpenLayers.js
 // ==/UserScript==
 
 var olImgs = "http://openlayers.org/api/img/";
-OpenLayers.Util.getImagesLocation=function(){return olImgs};
-markerURL = OpenLayers.Util.getImageLocation("marker.png")
+OpenLayers.Util.getImagesLocation=function(){return olImgs;};
+markerURL = OpenLayers.Util.getImageLocation("marker.png");
 $boxHeight = 600;
 defaultZoom = 13;
 defaultlon = 16.60; // Brno - longitude
@@ -35,19 +34,26 @@ var newdiv = $("<div id=#overviewDivMain> \
 $("#reservation_gui").before(newdiv); // add a box above all the cars
 //newdiv.css("height", $boxHeight+"px")
 //$newdiv.css("overflow", "scroll")
-newdiv.append("<div id='mapdiv'></div>")
-$("#mapdiv").css("border","1px solid #666")
-$("#mapdiv").css("margin-bottom","10px")
-$("#mapdiv").css("height",$boxHeight+"px")
+newdiv.append("<div id='mapdiv'></div>");
+$("#mapdiv").css("border","1px solid #666");
+$("#mapdiv").css("margin-bottom","10px");
+$("#mapdiv").css("height",$boxHeight+"px");
 
 $("#showBut").click(function (){
     $("#mapdiv").slideToggle();
 })
-$("#useCarToCenter").click(useCarToCenterEvent)
-$("#goToCity").click(goToCityEvent)
+$("#useCarToCenter").click(useCarToCenterEvent);
+$("#goToCity").click(goToCityEvent);
 
 map = new OpenLayers.Map("mapdiv");
-map.addLayer(new OpenLayers.Layer.OSM());
+map.addLayer(new OpenLayers.Layer.OSM(
+    "OpenStreetMap",
+    [ // Official OSM tileset as protocol-independent URLs
+        '//a.tile.openstreetmap.org/${z}/${x}/${y}.png',
+        '//b.tile.openstreetmap.org/${z}/${x}/${y}.png',
+        '//c.tile.openstreetmap.org/${z}/${x}/${y}.png'
+    ],
+    null));
     
 epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
 projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
@@ -77,7 +83,7 @@ refreshMap();
     addr = $(this).text();
     car = $(this).parents(".calInputRight").children(".calDesc").children("h2").text()
    // $tmpel = $("<div>"+$car + "XX"+$addr+"X" + $mlat+" X  "+$mlon+"</div>")
-    
+
     vectorLayer.addFeatures(myCreateMarker(car + "<br>"+addr, mlon, mlat));
     if(hardwiredDefaultCenter) {
         mySetCenter(defaultlon, defaultlat, defaultZoom)
