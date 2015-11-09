@@ -6,7 +6,7 @@
 // @description Autonapul - Caruso reservation modifications
 // @include     https://caruso.zemtu.com/reservation/*
 // @include     https://autonapul.zemtu.com/reservation/*
-// @version     20151109.2
+// @version     20151110.1
 // @author      Michael Mraka <mraka@autonapul.cz>
 // @grant       none
 // ==/UserScript==
@@ -24,10 +24,7 @@ $('#box_header > h1').after('<h1 class="span-6"><form id="filter" action="javasc
 $('#box_header > div').removeClass('span-14').addClass('span-12');
 
 // map div
-$('article > section > div > div.boxContent').prepend(
-        '<div id="globalMap"></div>'
-        + '<div class="span-24 last boxContent">'
-        );
+$('<div id="globalMap"></div>').insertAfter('article > section > div > div#box_header');
 $('style').append("#globalMap { \
         height: 580px; \
         border: 1px solid black; \
