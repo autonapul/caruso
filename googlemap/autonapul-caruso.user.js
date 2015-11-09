@@ -4,9 +4,9 @@
 // @updateURL   https://github.com/autonapul/caruso/raw/master/googlemap/autonapul-caruso.meta.js
 // @downloadURL https://github.com/autonapul/caruso/raw/master/googlemap/autonapul-caruso.user.js
 // @description Autonapul - Caruso reservation modifications
-// @include     https://zemtu.com/reservation/*
+// @include     https://caruso.zemtu.com/reservation/*
 // @include     https://autonapul.zemtu.com/reservation/*
-// @version     20151109.1
+// @version     20151109.2
 // @author      Michael Mraka <mraka@autonapul.cz>
 // @grant       none
 // ==/UserScript==
