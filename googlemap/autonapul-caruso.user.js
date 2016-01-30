@@ -6,7 +6,7 @@
 // @description Autonapul - Caruso reservation modifications
 // @include     https://caruso.zemtu.com/reservation/*
 // @include     https://autonapul.zemtu.com/reservation/*
-// @version     20151110.1
+// @version     20160130.1
 // @author      Michael Mraka <mraka@autonapul.cz>
 // @grant       none
 // ==/UserScript==
@@ -14,14 +14,6 @@
 // global variables
 var MAP;
 var CAR_MARKERS = [];
-
-// input box for filter
-$('#box_header > h1').removeClass('span-8').addClass('span-4');
-$('#box_header > h1').after('<h1 class="span-6"><form id="filter" action="javascript:void(0)">' +
-                            '<input type="text" id="filterText" name="filterText" size=15>' +
-                            '<input type="submit" id="filterSubmit" value="Filtruj">' +
-                            '</form></h1>');
-$('#box_header > div').removeClass('span-14').addClass('span-12');
 
 // map div
 $('<div id="globalMap"></div>').insertAfter('article > section > div > div#box_header');
@@ -32,33 +24,19 @@ $('style').append("#globalMap { \
 
 function filterCars() {
 //        console.log("filterCars()");
-        var filterText = document.getElementById('filterText').value;
-        localStorage.setItem('autonapul.filterText', filterText);
-//        console.log("setItem: " + filterText);
-        var patt = new RegExp(filterText,'i');
-
         var visibleCars = {};
         var containers = document.getElementsByClassName('calendarContainer');
         for (var i=0,imax=containers.length; i<imax; i++) {
                 var name = containers[i].getElementsByTagName('h2')[0].innerHTML;
-                if (name.match(patt) == null) {
-                        containers[i].style.display = 'none';
-                } else {
-                        containers[i].style.display = 'block';
-                        var mapLink = containers[i].getElementsByTagName('a')[2];
-                        if (mapLink != null) {
-                                visibleCars[name]=1;
-                        }
+                var mapLink = containers[i].getElementsByTagName('a')[2];
+                if (mapLink != null) {
+                    visibleCars[name]=1;
                 }
 //           console.log(name);
         }        
 //        console.log("visibleCars: " + visibleCars);
         showCars(visibleCars);
 };
-
-$('#filter').submit(function(event){
-        filterCars();
-});
 
 //
 // map functions
@@ -68,7 +46,7 @@ function loadMapAPI() {
 //    console.log("loadMapAPI()");
     // Asynchronously Load the map API
     add_script('', "function emptyMapCallback() {return 0;}");
-    add_script('https://maps.googleapis.com/maps/api/js?sensor=false&callback=emptyMapCallback', '');
+    add_script('https://maps.googleapis.com/maps/api/js?callback=emptyMapCallback', '');
     waitForMapAPI();
 //    add_script('https://www.autonapul.org/schedule_it/zones/zones.js', '');
 //    add_script('https://www.autonapul.org/schedule_it/zones/zone.js', '');
@@ -151,11 +129,12 @@ function mapInitialize() {
         zoom: 12,
     };
 
+//    console.log("MAP = ...");
     // Display a map on the page
     MAP = new google.maps.Map(document.getElementById("globalMap"), mapOptions);
     MAP.setTilt(45);
-//    console.log("CAR_MARKERS=");
 
+//    console.log("zone_init()");
     zone_init();
     var zones = [ZoneA,ZoneB,ZoneC,ZoneD,ZoneE,ZoneF,ZoneG];
     for (var i=0;i<zones.length;i++) {
@@ -164,9 +143,9 @@ function mapInitialize() {
 //    console.log("Zone "+zones[i].name);
     }
 
+//    console.log("CAR_MARKERS=");
     CAR_MARKERS = carMarkers();
 
-    $('#filterText').val(localStorage.getItem('autonapul.filterText'));
     filterCars();
 }
 

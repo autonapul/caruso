@@ -6,7 +6,7 @@
 // @description Autonapul - Caruso reservation modifications
 // @include     https://caruso.zemtu.com/reservation/*
 // @include     https://autonapul.zemtu.com/reservation/*
-// @version     20151110.1
+// @version     20160130.1
 // @author      Michael Mraka <mraka@autonapul.cz>
 // @grant       none
 // ==/UserScript==
