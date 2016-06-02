@@ -6,7 +6,7 @@
 // @description Autonapul - Caruso reservation modifications
 // @include     https://caruso.zemtu.com/reservation/*
 // @include     https://autonapul.zemtu.com/reservation/*
-// @version     20160130.1
+// @version     20160602.1
 // @author      Michael Mraka <mraka@autonapul.cz>
 // @grant       none
 // ==/UserScript==
@@ -181,7 +181,7 @@ function carMarkers() {
         for (var i=0,imax=containers.length; i<imax; i++) {
                 var header = containers[i].getElementsByTagName('h2')[0];
                 var name = header.innerHTML;
-                header.id = name;
+                header.id = name.trim();
 
                 var mapLink = containers[i].getElementsByTagName('a')[2];
                 var pos = mapLink.href.match(/^https?:\/\/www.openstreetmap.org\/\?mlat=([0-9\.]+)&mlon=([0-9\.]+)#.*/i);
@@ -201,7 +201,7 @@ function carMarkers() {
                       // Allow each marker to have an info window    
                       google.maps.event.addListener(marker, 'click', (function(marker, name, descr) {
                           return function() {
-                              infoWindow.setContent('<a href="#' + name + '">' + name + '</a><br>' + descr);
+                              infoWindow.setContent('<a href="#' + name.trim() + '">' + name + '</a><br>' + descr);
                               infoWindow.open(MAP, marker);
                               }
                           })(marker, name, descr));
